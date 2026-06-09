@@ -1,47 +1,8 @@
-import { useMemo, useState } from "react";
-import recipes from "../data/recipes.json";
+import { useState } from "react";
 import "../components/HomePage.css";
 
-const fallbackFeed = [
-  {
-    id: 1,
-    name: "Spicy Garlic Noodles",
-    creator: "Chef Nia",
-    ingredients: ["noodles", "garlic", "chili oil", "soy sauce", "green onion"],
-    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-  },
-  {
-    id: 2,
-    name: "Crispy Honey Chicken Bowl",
-    creator: "Marco Eats",
-    ingredients: ["chicken", "honey", "rice", "broccoli", "sesame seeds"],
-    video: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
-  },
-  {
-    id: 3,
-    name: "5-Minute Avocado Toast",
-    creator: "Lia Kitchen",
-    ingredients: ["bread", "avocado", "lemon", "salt", "chili flakes"],
-    video: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
-  }
-];
-
-export default function HomePage() {
+export default function HomePage({ feedRecipes, savedRecipeIds, onToggleSaveRecipe }) {
   const [searchTerm, setSearchTerm] = useState("");
-
-  const feedRecipes = useMemo(() => {
-    if (Array.isArray(recipes) && recipes.length > 0) {
-      return recipes.map((recipe, index) => ({
-        id: recipe.id ?? index + 1,
-        name: recipe.name ?? "Untitled Recipe",
-        creator: recipe.creator ?? recipe.author ?? "Community Cook",
-        ingredients: Array.isArray(recipe.ingredients) ? recipe.ingredients : [],
-        video: recipe.video ?? ""
-      }));
-    }
-
-    return fallbackFeed;
-  }, []);
 
   const visibleRecipes = feedRecipes.filter((recipe) => {
     const normalizedSearch = searchTerm.toLowerCase();
@@ -94,6 +55,13 @@ export default function HomePage() {
               <div className="recipe-feed-content">
                 <p className="recipe-creator">By {recipe.creator}</p>
                 <h2 className="recipe-title">{recipe.name}</h2>
+                <button
+                  type="button"
+                  className="recipe-save-btn"
+                  onClick={() => onToggleSaveRecipe(recipe.id)}
+                >
+                  {savedRecipeIds.includes(recipe.id) ? "Saved" : "Save Recipe"}
+                </button>
                 <p className="recipe-ingredients-label">Ingredients needed:</p>
                 <ul className="recipe-ingredients-list">
                   {recipe.ingredients.map((ingredient, idx) => (

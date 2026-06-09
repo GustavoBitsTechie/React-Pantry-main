@@ -109,6 +109,23 @@
   line-height: 1.2;
 }
 
+.recipe-save-btn {
+  border: 1px solid #cf8457;
+  border-radius: 999px;
+  background-color: #fff6ef;
+  color: #7d3a19;
+  font-weight: 700;
+  padding: 0.38rem 0.82rem;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.recipe-save-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(125, 58, 25, 0.13);
+}
+
 .recipe-ingredients-label {
   margin: 0 0 0.45rem;
   color: #4a2618;
